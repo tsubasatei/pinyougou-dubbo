@@ -1,0 +1,29 @@
+server:
+  port: 8001
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.239.11:8066/TESTDB
+#    url: jdbc:mysql:///pinyougoudb
+    username: mycat
+    password: 123456
+
+dubbo:
+  application:
+    name: pinyougou-sellergoods-service
+  registry:
+    address: zookeeper://192.168.239.11:2181
+  protocol:
+    name: dubbo
+    port: 20880
+
+mybatis-plus:
+  global-config:
+    db-config:
+      table-prefix: tb_ # 表前缀
+      id-type: auto  # 主键生成策略
+      logic-delete-value: 1 # 逻辑已删除值(默认为 1)
+      logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl # 打印 sql
