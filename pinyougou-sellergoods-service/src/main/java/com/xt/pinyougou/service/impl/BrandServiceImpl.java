@@ -19,6 +19,7 @@ import org.springframework.util.StringUtils;
 @Service(timeout = 5000)
 public class BrandServiceImpl extends ServiceImpl<BrandMapper, Brand> implements BrandService {
 
+    @Transactional(readOnly = true)
     @Override
     public IPage<Brand> selectPage(Integer currentPage, Integer pageNum, Brand brand) {
 
