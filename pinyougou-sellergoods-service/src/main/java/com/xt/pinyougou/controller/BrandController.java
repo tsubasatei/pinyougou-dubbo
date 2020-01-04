@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -90,6 +91,24 @@ public class BrandController {
                 result.setMessage("删除成功");
             } else {
                 result.setMessage("删除失败");
+            }
+        } catch (Exception e) {
+            result = new Result(false, e.getMessage());
+        }
+        return result;
+    }
+
+    @ApiOperation(value = "批量删除品牌", notes = "批量删除品牌")
+    @DeleteMapping("/deleteBatch/{ids}")
+    public Result deleteBatch(@ApiParam(value = "品牌IDs", required = true) @PathVariable("ids") Long[] ids) {
+        Result result = new Result();
+        try {
+            boolean flag = brandService.removeByIds(Arrays.asList(ids));
+            result.setSuccess(flag);
+            if (flag) {
+                result.setMessage("批量删除成功");
+            } else {
+                result.setMessage("批量删除失败");
             }
         } catch (Exception e) {
             result = new Result(false, e.getMessage());

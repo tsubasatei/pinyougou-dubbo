@@ -1,5 +1,6 @@
 package com.xt.pinyougou.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.xt.pinyougou.entity.Brand;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -13,4 +14,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface BrandService extends IService<Brand> {
 
+    IPage<Brand> selectPage(Integer currentPage, Integer pageNum, Brand brand);
 }

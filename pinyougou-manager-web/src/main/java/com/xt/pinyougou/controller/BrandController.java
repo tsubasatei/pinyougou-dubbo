@@ -2,9 +2,7 @@ package com.xt.pinyougou.controller;
 
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xt.bean.Result;
 import com.xt.pinyougou.entity.Brand;
 import com.xt.pinyougou.service.BrandService;
@@ -13,6 +11,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -96,12 +95,38 @@ public class BrandController {
         return result;
     }
 
+    @ApiOperation(value = "批量删除品牌", notes = "批量删除品牌")
+    @DeleteMapping("/deleteBatch/{ids}")
+    public Result deleteBatch(@ApiParam(value = "品牌IDs", required = true) @PathVariable("ids") Long[] ids) {
+        Result result = new Result();
+        try {
+            boolean flag = brandService.removeByIds(Arrays.asList(ids));
+            result.setSuccess(flag);
+            if (flag) {
+                result.setMessage("批量删除成功");
+            } else {
+                result.setMessage("批量删除失败");
+            }
+        } catch (Exception e) {
+            result = new Result(false, e.getMessage());
+        }
+        return result;
+    }
+
+    /**
+     * Mybatis-Plus3 的 QueryWrapper 不支持 dubbo 序列化
+     * @param currentPage
+     * @param pageNum
+     * @param brand
+     * @return
+     */
     @ApiOperation(value = "获得品牌分页列表", notes = "列表信息")
     @PostMapping("/page")
     public IPage<Brand> page(@ApiParam(value = "当前页码", required = true) Integer currentPage,
                              @ApiParam(value = "每页大小", required = true) Integer pageNum,
                              @RequestBody Brand brand) {
-        return brandService.page(new Page<>(currentPage, pageNum), new QueryWrapper<>(brand));
+
+        return brandService.selectPage(currentPage, pageNum, brand);
     }
 }
 

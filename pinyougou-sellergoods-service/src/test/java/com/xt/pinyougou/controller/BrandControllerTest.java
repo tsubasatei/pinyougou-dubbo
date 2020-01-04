@@ -77,6 +77,14 @@ public class BrandControllerTest {
     }
 
     @Test
+    public void testDeleteBatch () throws Exception {
+        String result = mockMvc.perform(delete("/brand/deleteBatch/24").contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+        System.out.println("result: " + result);
+    }
+
+    @Test
     public void testPage () throws Exception {
 //        String content = "{\"name\":\"联想\",\"firstChar\":\"L\"}";
         String content = "{\"name\":\"\",\"firstChar\":\"\"}";
