@@ -34,7 +34,7 @@ app.service('brandService', function ($http) {
     this.delete = function (id) {
         return $http({
             method: 'DELETE',
-            url: '/consumer/brand/' + id,
+            url: '/consumer/brand/' + id
         })
     };
 
@@ -45,4 +45,9 @@ app.service('brandService', function ($http) {
             url: '/consumer/brand/deleteBatch/' + ids
         })
     };
+
+    // 关联的品牌列表
+    this.findBrandList = function () {
+        return $http.get('/consumer/brand/findBrandList');
+    }
 });

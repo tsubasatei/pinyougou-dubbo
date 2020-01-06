@@ -4,18 +4,19 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xt.pinyougou.entity.Specification;
 import com.xt.pinyougou.entity.SpecificationOption;
 import com.xt.pinyougou.mapper.SpecificationMapper;
 import com.xt.pinyougou.pojo.SpecificationGroup;
 import com.xt.pinyougou.service.SpecificationOptionService;
 import com.xt.pinyougou.service.SpecificationService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -145,5 +146,12 @@ public class SpecificationServiceImpl extends ServiceImpl<SpecificationMapper, S
             queryWrapper.lambda().like(Specification::getSpecName, specification.getSpecName());
         }
         return baseMapper.selectPage(new Page<>(currentPage, pageNum), queryWrapper);
+    }
+
+    @Override
+    public List<Map<String, Object>> selectOptionList() {
+        QueryWrapper<Specification> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("id", "spec_name as text");
+        return baseMapper.selectMaps(queryWrapper);
     }
 }

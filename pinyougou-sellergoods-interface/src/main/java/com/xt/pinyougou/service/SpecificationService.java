@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.xt.pinyougou.pojo.SpecificationGroup;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -28,4 +29,10 @@ public interface SpecificationService extends IService<Specification> {
     boolean removeGroupByIds(List<Long> asList);
 
     IPage<Specification> selectPage(Integer currentPage, Integer pageNum, Specification specification);
+
+    /**
+     * 读取规格列表
+     * @return
+     */
+    List<Map<String, Object>> selectOptionList();
 }

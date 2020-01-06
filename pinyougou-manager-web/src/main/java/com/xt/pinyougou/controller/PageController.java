@@ -12,21 +12,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class PageController {
 
     // 首页
-    @GetMapping("/index.html")
+    @GetMapping("/index")
     public String index() {
         return "admin/index";
     }
 
     // 品牌
-    @GetMapping("/brand.html")
+    @GetMapping("/brand")
     public String brand() {
         return "admin/brand";
     }
 
-    // 品牌
-    @GetMapping("/specification.html")
+    // 规格
+    @GetMapping("/specification")
     public String specification() {
         return "admin/specification";
+    }
+
+    // 模板
+    @GetMapping("/typeTemplate")
+    public String typeTemplate() {
+        return "admin/type_template";
     }
 
 }

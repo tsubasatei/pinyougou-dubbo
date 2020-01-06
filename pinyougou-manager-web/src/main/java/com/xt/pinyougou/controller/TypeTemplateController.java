@@ -4,50 +4,48 @@ package com.xt.pinyougou.controller;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.xt.bean.Result;
-import com.xt.pinyougou.entity.Brand;
-import com.xt.pinyougou.service.BrandService;
-import io.swagger.annotations.Api;
+import com.xt.pinyougou.entity.TypeTemplate;
+import com.xt.pinyougou.service.TypeTemplateService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 /**
  * <p>
- *  品牌管理前端控制器
+ *  类型模板 前端控制器
  * </p>
  *
+ * @author xt
+ * @since 2020-01-06
  */
-@Api(value = "brand", description = "品牌管理-消费端")
 @RestController
-@RequestMapping("/consumer/brand")
-public class BrandController {
-
+@RequestMapping("/consumer/typeTemplate")
+public class TypeTemplateController {
 
     @Reference
-    private BrandService brandService;
+    private TypeTemplateService typeTemplateService;
 
-    @ApiOperation(value = "查询品牌详细信息", notes = "品牌详情")
+    @ApiOperation(value = "查询类型模板详细信息", notes = "类型模板详情")
     @GetMapping("/{id}")
-    public Brand get(@ApiParam(value = "品牌ID", required = true) @PathVariable("id") Long id) {
-        return brandService.getById(id);
+    public TypeTemplate get(@ApiParam(value = "类型模板ID", required = true) @PathVariable("id") Long id) {
+        return typeTemplateService.getById(id);
     }
 
-    @ApiOperation(value = "获得品牌列表", notes = "列表信息")
+    @ApiOperation(value = "获得类型模板列表", notes = "列表信息")
     @GetMapping("/list")
-    public List<Brand> list() {
-        return brandService.list();
+    public List<TypeTemplate> list() {
+        return typeTemplateService.list();
     }
 
-    @ApiOperation(value = "添加品牌", notes = "添加品牌")
+    @ApiOperation(value = "添加类型模板", notes = "添加类型模板")
     @PostMapping
-    public Result add(@RequestBody Brand brand) {
+    public Result add(@RequestBody TypeTemplate typeTemplate) {
         Result result = new Result();
         try {
-            boolean flag = brandService.save(brand);
+            boolean flag = typeTemplateService.save(typeTemplate);
             result.setSuccess(flag);
             if (flag) {
                 result.setMessage("添加成功");
@@ -60,12 +58,12 @@ public class BrandController {
         return result;
     }
 
-    @ApiOperation(value = "更新品牌", notes = "更新品牌")
+    @ApiOperation(value = "更新类型模板", notes = "更新类型模板")
     @PutMapping
-    public Result update(@RequestBody Brand brand) {
+    public Result update(@RequestBody TypeTemplate typeTemplate) {
         Result result = new Result();
         try {
-            boolean flag = brandService.updateById(brand);
+            boolean flag = typeTemplateService.updateById(typeTemplate);
             result.setSuccess(flag);
             if (flag) {
                 result.setMessage("更新成功");
@@ -78,12 +76,12 @@ public class BrandController {
         return result;
     }
 
-    @ApiOperation(value = "删除品牌", notes = "删除品牌")
+    @ApiOperation(value = "删除类型模板", notes = "删除类型模板")
     @DeleteMapping("/{id}")
-    public Result delete(@ApiParam(value = "品牌ID", required = true) @PathVariable("id") Long id) {
+    public Result delete(@ApiParam(value = "类型模板ID", required = true) @PathVariable("id") Long id) {
         Result result = new Result();
         try {
-            boolean flag = brandService.removeById(id);
+            boolean flag = typeTemplateService.removeById(id);
             result.setSuccess(flag);
             if (flag) {
                 result.setMessage("删除成功");
@@ -96,12 +94,12 @@ public class BrandController {
         return result;
     }
 
-    @ApiOperation(value = "批量删除品牌", notes = "批量删除品牌")
+    @ApiOperation(value = "批量删除类型模板", notes = "批量删除类型模板")
     @DeleteMapping("/deleteBatch/{ids}")
-    public Result deleteBatch(@ApiParam(value = "品牌IDs", required = true) @PathVariable("ids") Long[] ids) {
+    public Result deleteBatch(@ApiParam(value = "类型模板IDs", required = true) @PathVariable("ids") Long[] ids) {
         Result result = new Result();
         try {
-            boolean flag = brandService.removeByIds(Arrays.asList(ids));
+            boolean flag = typeTemplateService.removeByIds(Arrays.asList(ids));
             result.setSuccess(flag);
             if (flag) {
                 result.setMessage("批量删除成功");
@@ -118,22 +116,16 @@ public class BrandController {
      * Mybatis-Plus3 的 QueryWrapper 不支持 dubbo 序列化
      * @param currentPage
      * @param pageNum
-     * @param brand
+     * @param typeTemplate
      * @return
      */
-    @ApiOperation(value = "获得品牌分页列表", notes = "列表信息")
+    @ApiOperation(value = "获得类型模板分页列表", notes = "列表信息")
     @PostMapping("/page")
-    public IPage<Brand> page(@ApiParam(value = "当前页码", required = true) Integer currentPage,
+    public IPage<TypeTemplate> page(@ApiParam(value = "当前页码", required = true) Integer currentPage,
                              @ApiParam(value = "每页大小", required = true) Integer pageNum,
-                             @RequestBody Brand brand) {
+                             @RequestBody TypeTemplate typeTemplate) {
 
-        return brandService.selectPage(currentPage, pageNum, brand);
-    }
-
-    @ApiOperation(value = "读取品牌列表", notes = "列表信息")
-    @GetMapping("/findBrandList")
-    public List<Map<String, Object>> findBrandList() {
-        return brandService.selectOptionList();
+        return typeTemplateService.selectPage(currentPage, pageNum, typeTemplate);
     }
 }
 

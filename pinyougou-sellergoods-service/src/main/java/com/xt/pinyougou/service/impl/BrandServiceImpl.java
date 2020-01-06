@@ -11,6 +11,9 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * <p>
  *  品牌服务实现类
@@ -18,6 +21,13 @@ import org.springframework.util.StringUtils;
  */
 @Service(timeout = 5000)
 public class BrandServiceImpl extends ServiceImpl<BrandMapper, Brand> implements BrandService {
+
+    @Override
+    public List<Map<String, Object>> selectOptionList() {
+        QueryWrapper<Brand> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("id", "name as text");
+        return baseMapper.selectMaps(queryWrapper);
+    }
 
     @Transactional(readOnly = true)
     @Override

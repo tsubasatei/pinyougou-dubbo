@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -129,6 +130,12 @@ public class SpecificationController {
                              @RequestBody Specification specification) {
 
         return specificationService.selectPage(currentPage, pageNum, specification);
+    }
+
+    @ApiOperation(value = "读取规格列表", notes = "列表信息")
+    @GetMapping("/findSpecList")
+    public List<Map<String, Object>> findSpecList() {
+        return specificationService.selectOptionList();
     }
 }
 
