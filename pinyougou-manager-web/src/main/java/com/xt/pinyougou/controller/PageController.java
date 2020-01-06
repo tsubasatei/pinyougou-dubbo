@@ -23,4 +23,10 @@ public class PageController {
         return "admin/brand";
     }
 
+    // 品牌
+    @GetMapping("/specification.html")
+    public String specification() {
+        return "admin/specification";
+    }
+
 }

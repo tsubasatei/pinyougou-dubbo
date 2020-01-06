@@ -12,6 +12,11 @@
     <artifactId>pinyougou-mapper</artifactId>
     <description>数据访问模块</description>
 
+    <properties>
+        <mp.version>3.2.0</mp.version>
+        <velocity.version>2.1</velocity.version>
+    </properties>
+
     <dependencies>
 
         <dependency>
@@ -22,6 +27,18 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+
+        <!-- mp 代码生成器相关 -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-generator</artifactId>
+            <version>${mp.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity-engine-core</artifactId>
+            <version>${velocity.version}</version>
         </dependency>
     </dependencies>
 </project>

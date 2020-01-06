@@ -4,10 +4,10 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://192.168.239.11:8066/TESTDB
-#    url: jdbc:mysql:///pinyougoudb
-    username: mycat
-    password: 123456
+#    url: jdbc:mysql://192.168.239.11:8066/TESTDB
+    url: jdbc:mysql:///pinyougoudb
+    username: root
+    password: root
 
 dubbo:
   application:
