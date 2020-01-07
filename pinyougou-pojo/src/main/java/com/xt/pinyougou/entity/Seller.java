@@ -1,5 +1,6 @@
 package com.xt.pinyougou.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -28,6 +29,7 @@ public class Seller implements Serializable {
     private static final long serialVersionUID=1L;
 
     @ApiModelProperty(value = "用户ID")
+    @TableId(value = "seller_id")
     private String sellerId;
 
     @ApiModelProperty(value = "公司名")

@@ -42,4 +42,16 @@ public class PageController {
         return "admin/type_template";
     }
 
+    @GetMapping("/seller1")
+    @ApiOperation(value = "商家审核", notes = "商家审核")
+    public String seller1() {
+        return "admin/seller_1";
+    }
+
+    @GetMapping("/seller")
+    @ApiOperation(value = "商家管理", notes = "商家管理")
+    public String seller() {
+        return "admin/seller";
+    }
+
 }
