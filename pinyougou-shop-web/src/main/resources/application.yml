@@ -1,0 +1,14 @@
+server:
+  port: 9101
+
+dubbo:
+  application:
+    name: pinyougou-shop-web
+  registry:
+    address: zookeeper://192.168.239.11:2181
+
+spring:
+  thymeleaf:
+    cache: false
+
+

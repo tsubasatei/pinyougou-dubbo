@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.xt.bean.Result;
 import com.xt.pinyougou.entity.TypeTemplate;
 import com.xt.pinyougou.service.TypeTemplateService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,7 @@ import java.util.List;
  * @author xt
  * @since 2020-01-06
  */
+@Api(value = "typeTemplate", description = "模板管理-消费端")
 @RestController
 @RequestMapping("/consumer/typeTemplate")
 public class TypeTemplateController {
