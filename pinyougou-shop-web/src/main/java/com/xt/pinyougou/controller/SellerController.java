@@ -8,6 +8,8 @@ import com.xt.pinyougou.entity.Seller;
 import com.xt.pinyougou.service.SellerService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +34,8 @@ public class SellerController {
 
     @Reference
     private SellerService sellerService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @ApiOperation(value = "商家注册", notes = "添加商家")
     @PostMapping
@@ -40,6 +44,8 @@ public class SellerController {
         try {
             seller.setStatus("0");
             seller.setCreateTime(LocalDateTime.now());
+            // 设置密码
+            seller.setPassword(passwordEncoder.encode(seller.getPassword()));
             boolean flag = sellerService.save(seller);
             result.setSuccess(flag);
             if (flag) {
