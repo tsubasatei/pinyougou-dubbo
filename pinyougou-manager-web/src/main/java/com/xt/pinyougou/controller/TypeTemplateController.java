@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -128,6 +129,12 @@ public class TypeTemplateController {
                              @RequestBody TypeTemplate typeTemplate) {
 
         return typeTemplateService.selectPage(currentPage, pageNum, typeTemplate);
+    }
+
+    @ApiOperation(value = "读取类型模板列表", notes = "列表信息")
+    @GetMapping("/findTypeTemplateList")
+    public List<Map<String, Object>> findTypeTemplateList() {
+        return typeTemplateService.selectOptionList();
     }
 }
 

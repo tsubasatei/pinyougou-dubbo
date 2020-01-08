@@ -45,4 +45,9 @@ app.service('typeTemplateService', function ($http) {
             url: '/consumer/typeTemplate/deleteBatch/' + ids
         })
     };
+
+    // 读取类型模板列表
+    this.findTypeTemplateList = function () {
+        return $http.get('/consumer/typeTemplate/findTypeTemplateList');
+    }
 });

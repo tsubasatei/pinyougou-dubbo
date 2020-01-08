@@ -54,4 +54,10 @@ public class PageController {
         return "admin/seller";
     }
 
+    @GetMapping("/itemCat")
+    @ApiOperation(value = "分类管理", notes = "分类管理")
+    public String itemCat() {
+        return "admin/item_cat";
+    }
+
 }

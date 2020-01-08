@@ -1,5 +1,6 @@
 package com.xt.pinyougou;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
@@ -46,6 +47,7 @@ public class CodeGenerator {
         String projectPath = System.getProperty("user.dir");
         gc.setOutputDir(projectPath + "/src/main/java");
         gc.setAuthor("xt");
+        gc.setIdType(IdType.AUTO);
         gc.setOpen(false);
         gc.setServiceName("%sService");
         gc.setSwagger2(true);  // 实体属性 Swagger2 注解
