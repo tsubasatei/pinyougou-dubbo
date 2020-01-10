@@ -28,7 +28,7 @@ public class GoodsDesc implements Serializable {
     private static final long serialVersionUID=1L;
 
     @ApiModelProperty(value = "SPU_ID")
-    @TableId(value = "goods_id", type = IdType.AUTO)
+    @TableId(value = "goods_id")
     private Long goodsId;
 
     @ApiModelProperty(value = "描述")

@@ -83,7 +83,7 @@ app.controller('itemCatController', function ($scope, $controller, itemCatServic
     $scope.typeTemplateList = [];
     // 读取类型模板列表
     $scope.findTypeTemplateList = function () {
-        typeTemplateService.findTypeTemplateList().success(
+        typeTemplateService.findList().success(
             function (response) {
                 $scope.typeTemplateList = response;
             }
@@ -99,6 +99,7 @@ app.controller('itemCatController', function ($scope, $controller, itemCatServic
                         alert(response.message);
                         //重新查询
                         $scope.findByParentId($scope.parentId);
+                        $scope.selectIds = [];//清空ID集合
                     } else {
                         alert(response.message);
                     }

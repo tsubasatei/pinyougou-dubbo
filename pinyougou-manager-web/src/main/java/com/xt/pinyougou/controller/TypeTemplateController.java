@@ -131,10 +131,12 @@ public class TypeTemplateController {
         return typeTemplateService.selectPage(currentPage, pageNum, typeTemplate);
     }
 
-    @ApiOperation(value = "读取类型模板列表", notes = "列表信息")
-    @GetMapping("/findTypeTemplateList")
-    public List<Map<String, Object>> findTypeTemplateList() {
-        return typeTemplateService.selectOptionList();
+    @ApiOperation(value = "查询规格列表", notes = "查询规格列表")
+    @GetMapping("/findSpecList/{id}")
+    public List<Map> findSpecList(@ApiParam(value = "类型模板ID", required = true) @PathVariable Long id) {
+        List<Map> list = typeTemplateService.findSpecList(id);
+        return list;
     }
+
 }
 

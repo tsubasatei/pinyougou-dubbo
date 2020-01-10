@@ -32,4 +32,9 @@ app.service('itemCatService', function ($http) {
             url: '/consumer/itemCat/deleteBatch/' + ids
         })
     };
+
+    // 查询所有列表
+    this.findItemCatList = function () {
+        return $http.get('/consumer/itemCat/list');
+    }
 });

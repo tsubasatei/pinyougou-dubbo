@@ -38,7 +38,8 @@ public class ItemCatServiceImpl extends ServiceImpl<ItemCatMapper, ItemCat> impl
             if (catChildren != null && catChildren.size() > 0) {
                 return false;
             }
-            baseMapper.deleteById(id);
+            int result = baseMapper.deleteById(id);
+            return result == 1;
         }
         return true;
     }

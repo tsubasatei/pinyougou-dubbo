@@ -60,4 +60,16 @@ public class PageController {
         return "admin/item_cat";
     }
 
+    @GetMapping("/goods")
+    @ApiOperation(value = "商品审核", notes = "商品审核")
+    public String goods() {
+        return "admin/goods";
+    }
+
+    @GetMapping("/goodsDetail")
+    @ApiOperation(value = "商品详情", notes = "商品详情")
+    public String goodsDetail() {
+        return "admin/goods_detail";
+    }
+
 }

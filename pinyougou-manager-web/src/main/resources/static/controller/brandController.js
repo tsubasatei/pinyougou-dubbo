@@ -65,6 +65,7 @@ app.controller('brandController', function ($scope, $controller, brandService) {
                     if (response.success) {
                         alert(response.message);
                         $scope.reloadList(); // 刷新
+                        $scope.selectIds = [];//清空ID集合
                     } else {
                         alert(response.message);
                     }

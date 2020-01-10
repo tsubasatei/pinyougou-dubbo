@@ -46,8 +46,9 @@ app.service('typeTemplateService', function ($http) {
         })
     };
 
-    // 读取类型模板列表
-    this.findTypeTemplateList = function () {
-        return $http.get('/consumer/typeTemplate/findTypeTemplateList');
+    // 规格列表
+    this.findSpecList = function (id) {
+        return $http.get('/consumer/typeTemplate/findSpecList/' + id);
     }
+
 });

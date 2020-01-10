@@ -94,5 +94,11 @@ public class ItemCatController {
         }
         return result;
     }
+
+    @GetMapping("/list")
+    @ApiOperation(value = "获取所有分类列表", notes = "列表信息")
+    public List<ItemCat> findList() {
+        return itemCatService.list();
+    }
 }
 

@@ -19,5 +19,6 @@ public interface TypeTemplateService extends IService<TypeTemplate> {
 
     IPage<TypeTemplate> selectPage(Integer currentPage, Integer pageNum, TypeTemplate typeTemplate);
 
-    List<Map<String, Object>> selectOptionList();
+    // 查询规格列表
+    List<Map> findSpecList(Long id);
 }

@@ -1,6 +1,8 @@
 package com.xt.pinyougou.entity;
 
 import java.math.BigDecimal;
+
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -74,6 +76,7 @@ public class Goods implements Serializable {
     @ApiModelProperty(value = "是否启用规格")
     private String isEnableSpec;
 
+    @TableLogic
     @ApiModelProperty(value = "是否删除")
     private String isDelete;
 
