@@ -1,4 +1,4 @@
-// 广告分类管理 服务
+// 广告管理 服务
 app.service('contentService', function ($http) {
 
     // 查询列表

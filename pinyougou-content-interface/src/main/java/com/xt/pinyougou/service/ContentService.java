@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.xt.pinyougou.entity.Content;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  *  广告 服务类
@@ -15,4 +17,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface ContentService extends IService<Content> {
 
     IPage<Content> selectPage(Integer currentPage, Integer pageNum, Content content);
+
+    List<Content> findListByCategoryId(Long categoryId);
 }

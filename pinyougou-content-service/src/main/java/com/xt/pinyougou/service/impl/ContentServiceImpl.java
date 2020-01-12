@@ -11,6 +11,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.util.List;
+
 /**
  * <p>
  *  广告 服务实现类
@@ -30,5 +32,17 @@ public class ContentServiceImpl extends ServiceImpl<ContentMapper, Content> impl
             queryWrapper.lambda().like(Content::getTitle, content.getTitle());
         }
         return baseMapper.selectPage(new Page<>(currentPage, pageNum), queryWrapper);
+    }
+
+    // 根据广告类型ID查询列表
+    @Transactional(readOnly = true)
+    @Override
+    public List<Content> findListByCategoryId(Long categoryId) {
+        QueryWrapper<Content> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda().eq(Content::getCategoryId, categoryId);
+        queryWrapper.lambda().eq(Content::getStatus,"1"); //开启状态
+        queryWrapper.orderByAsc("sort_order"); //排序
+
+        return baseMapper.selectList(queryWrapper);
     }
 }
