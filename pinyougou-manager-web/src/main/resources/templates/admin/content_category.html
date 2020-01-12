@@ -7,16 +7,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>广告分类管理</title>
     <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
-    <link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../plugins/adminLTE/css/AdminLTE.css">
-    <link rel="stylesheet" href="../plugins/adminLTE/css/skins/_all-skins.min.css">
-    <link rel="stylesheet" href="../css/style.css">
-	<script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
-    <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/static/assets/plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/assets/plugins/adminLTE/css/AdminLTE.css">
+    <link rel="stylesheet" href="/static/assets/plugins/adminLTE/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="/static/assets/css/style.css">
     
 </head>
 
-<body class="hold-transition skin-red sidebar-mini"  >
+<body class="hold-transition skin-red sidebar-mini" ng-app="pinyougou" ng-controller="contentCategoryController">
   <!-- .box-body -->
                 
                     <div class="box-header with-border">
@@ -32,17 +30,16 @@
                             <div class="pull-left">
                                 <div class="form-group form-inline">
                                     <div class="btn-group">
-                                        <button type="button" class="btn btn-default" title="新建" data-toggle="modal" data-target="#editModal" ><i class="fa fa-file-o"></i> 新建</button>
-                                        <button type="button" class="btn btn-default" title="删除" ><i class="fa fa-trash-o"></i> 删除</button>
-                                        <button type="button" class="btn btn-default" title="开启" onclick='confirm("你确认要开启吗？")'><i class="fa fa-check"></i> 开启</button>
-                                        <button type="button" class="btn btn-default" title="屏蔽" onclick='confirm("你确认要屏蔽吗？")'><i class="fa fa-ban"></i> 屏蔽</button>
+                                        <button type="button" class="btn btn-default" title="新建" data-toggle="modal" data-target="#editModal" ng-click="entity={}"><i class="fa fa-file-o"></i> 新建</button>
+                                        <button type="button" class="btn btn-default" title="删除" ng-click="deleteBatch()"><i class="fa fa-trash-o"></i> 删除</button>
                                         <button type="button" class="btn btn-default" title="刷新" onclick="window.location.reload();"><i class="fa fa-refresh"></i> 刷新</button>
                                     </div>
                                 </div>
                             </div>
                             <div class="box-tools pull-right">
                                 <div class="has-feedback">
-							        名称：<input >	<button class="btn btn-default" >查询</button>                                    
+							        名称：<input ng-model="searchEntity.name">
+									<button class="btn btn-default" ng-click="reloadList()">查询</button>
                                 </div>
                             </div>
                             <!--工具栏/-->
@@ -53,33 +50,25 @@
 			                          <tr>
 			                              <th class="" style="padding-right:0px">
 			                                  <input id="selall" type="checkbox" class="icheckbox_square-blue">
-			                              </th> 
-										  <th class="sorting_asc">分类ID</th>
-									      <th class="sorting">分类名称</th>
-									      <th class="sorting">分组</th>
-									      <th class="sorting">KEY</th>
-									      <th class="sorting">状态</th>								      							
+			                              </th>
+										  <th class="sorting_asc">类目ID</th>
+										  <th class="sorting">分类名称</th>
 					                      <th class="text-center">操作</th>
 			                          </tr>
 			                      </thead>
 			                      <tbody>
-			                          <tr>
-			                              <td><input  type="checkbox" ></td>			                              
-				                          <td>1</td>
-									      <td>首页轮播广告</td>
-									      <td>首页广告</td>
-									      <td>index</td>
-		                                  <td>
-			                                 <span>无效</span>	
-										     <span>有效</span>										                                    
-		                                  </td>
+			                          <tr ng-repeat="entity in list">
+			                              <td><input  type="checkbox" ng-click="updateSelection($event, entity.id)"></td>
+									      <td>{{entity.id}}</td>
+									      <td>{{entity.name}}</td>
 		                                  <td class="text-center">                                           
-		                                 	  <button type="button" class="btn bg-olive btn-xs" data-toggle="modal" data-target="#editModal" >修改</button>                                           
+		                                 	  <button type="button" class="btn bg-olive btn-xs" data-toggle="modal" data-target="#editModal" ng-click="findOne(entity.id)">修改</button>
 		                                  </td>
 			                          </tr>
 			                      </tbody>
 			                  </table>
-			                  <!--数据列表/--> 
+			                  <!--数据列表/-->
+							<tm-pagination conf="paginationConf"></tm-pagination>
                         </div>
                         <!-- 数据表格 /-->
                      </div>
@@ -100,34 +89,29 @@
 			<table class="table table-bordered table-striped"  width="800px">
 		      	<tr>
 		      		<td>分类名称</td>
-		      		<td><input  class="form-control" placeholder="分类名称">  </td>
+		      		<td><input  class="form-control" placeholder="分类名称" ng-model="entity.name">  </td>
 		      	</tr>
-		      	<tr>
-		      		<td>分组</td>
-		      		<td><input  class="form-control" placeholder="分组">  </td>
-		      	</tr>	
-			    <tr>
-		      		<td>KEY</td>
-		      		<td><input  class="form-control" placeholder="KEY">  </td>
-		      	</tr>		      
-		      	<tr>
-		      		<td>是否有效</td>
-		      		<td>
-		      		 <input type="checkbox" class="icheckbox_square-blue" >
-		      		</td>
-		      	</tr>  	
-			 </table>				
+			 </table>
 			
 		</div>
 		<div class="modal-footer">						
-			<button class="btn btn-success" data-dismiss="modal" aria-hidden="true">保存</button>
-			<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
+			<button class="btn btn-success" data-dismiss="modal" aria-hidden="true" ng-click="save()">保存</button>
+			<button class="btn btn-default" data-dismiss="modal" aria-hidden="true" >关闭</button>
 		</div>
 	  </div>
 	</div>
 </div>
-
-    
+  <script src="/static/assets/plugins/jQuery/jquery-2.2.3.min.js"></script>
+  <script src="/static/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+  <script src="/static/assets/plugins/angularjs/angular.min.js"></script>
+  <!-- 分页组件开始 -->
+  <script src="/static/assets/plugins/angularjs/pagination.js"></script>
+  <link rel="stylesheet" href="/static/assets/plugins/angularjs/pagination.css">
+  <!-- 分页组件结束 -->
+  <script src="/static/base_pagination.js"></script>
+  <script src="/static/service/contentCategoryService.js"></script>
+  <script src="/static/controller/baseController.js"></script>
+  <script src="/static/controller/contentCategoryController.js"></script>
 </body>
 
 </html>

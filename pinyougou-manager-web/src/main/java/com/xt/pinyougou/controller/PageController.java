@@ -72,4 +72,15 @@ public class PageController {
         return "admin/goods_detail";
     }
 
+    @GetMapping("/contentCategory")
+    @ApiOperation(value = "广告分类详情", notes = "广告分类详情")
+    public String contentCategory() {
+        return "admin/content_category";
+    }
+    @GetMapping("/content")
+    @ApiOperation(value = "广告详情", notes = "广告详情")
+    public String content() {
+        return "admin/content";
+    }
+
 }
