@@ -47,7 +47,7 @@ public class ContentController {
     public Result add(@RequestBody Content Content) {
         Result result = new Result();
         try {
-            boolean flag = contentyService.save(Content);
+            boolean flag = contentyService.insert(Content);
             result.setSuccess(flag);
             if (flag) {
                 result.setMessage("添加成功");
@@ -65,7 +65,7 @@ public class ContentController {
     public Result update(@RequestBody Content Content) {
         Result result = new Result();
         try {
-            boolean flag = contentyService.updateById(Content);
+            boolean flag = contentyService.update(Content);
             result.setSuccess(flag);
             if (flag) {
                 result.setMessage("更新成功");
@@ -83,7 +83,7 @@ public class ContentController {
     public Result deleteBatch(@ApiParam(value = "广告IDs", required = true) @PathVariable("ids") Long[] ids) {
         Result result = new Result();
         try {
-            boolean flag = contentyService.removeByIds(Arrays.asList(ids));
+            boolean flag = contentyService.deleteBatch(Arrays.asList(ids));
             result.setSuccess(flag);
             if (flag) {
                 result.setMessage("批量删除成功");

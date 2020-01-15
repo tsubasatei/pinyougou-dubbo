@@ -7,6 +7,9 @@ spring:
     url: jdbc:mysql:///pinyougoudb
     username: root
     password: root
+    # 导入其他模块的yml配置
+  profiles:
+    include: common
 dubbo:
   application:
     name: pinyougou-content-service

@@ -19,4 +19,10 @@ public interface ContentService extends IService<Content> {
     IPage<Content> selectPage(Integer currentPage, Integer pageNum, Content content);
 
     List<Content> findListByCategoryId(Long categoryId);
+
+    boolean insert(Content content);
+
+    boolean update(Content content);
+
+    boolean deleteBatch(List<Long> asList);
 }

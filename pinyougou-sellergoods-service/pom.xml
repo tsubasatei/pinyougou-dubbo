@@ -23,6 +23,7 @@
             <artifactId>pinyougou-sellergoods-interface</artifactId>
             <version>${project.version}</version>
         </dependency>
+
         <dependency>
             <groupId>com.alibaba.boot</groupId>
             <artifactId>dubbo-spring-boot-starter</artifactId>

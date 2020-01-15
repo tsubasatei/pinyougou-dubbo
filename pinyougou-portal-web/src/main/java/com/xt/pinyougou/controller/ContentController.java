@@ -31,8 +31,8 @@ public class ContentController {
     private ContentService contentService;
 
     @ApiOperation(value = "查询广告分类详细信息", notes = "广告分类详情")
-    @GetMapping("/list/{categoryId}")
-    public List<Content> get(@ApiParam(value = "广告分类ID", required = true) @PathVariable("categoryId") Long categoryId) {
+    @GetMapping("/findContentList/{categoryId}")
+    public List<Content> findContentList(@ApiParam(value = "广告分类ID", required = true) @PathVariable("categoryId") Long categoryId) {
         return contentService.findListByCategoryId(categoryId);
     }
 
