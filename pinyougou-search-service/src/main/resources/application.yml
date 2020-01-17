@@ -1,0 +1,15 @@
+server:
+  port: 8003
+
+dubbo:
+  application:
+    name: pinyougou-search-service
+  registry:
+    address: zookeeper://192.168.239.11:2181
+  protocol:
+    name: dubbo
+    port: 20882
+spring:
+  data:
+    solr:
+      host: http://192.168.239.11:8983/solr

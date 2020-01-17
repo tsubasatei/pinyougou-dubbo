@@ -1,0 +1,15 @@
+server:
+  port: 9004
+
+dubbo:
+  application:
+    name: pinyougou-search-web
+  registry:
+    address: zookeeper://192.168.239.11:2181
+
+spring:
+  thymeleaf:
+    cache: false
+
+
+
