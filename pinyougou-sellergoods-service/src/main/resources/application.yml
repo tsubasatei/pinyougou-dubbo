@@ -1,14 +1,6 @@
 server:
   port: 8001
 
-spring:
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://192.168.239.11:8066/TESTDB
-    url: jdbc:mysql:///pinyougoudb
-    username: root
-    password: root
-
 dubbo:
   application:
     name: pinyougou-sellergoods-service
@@ -18,12 +10,6 @@ dubbo:
     name: dubbo
     port: 20880
 
-mybatis-plus:
-  global-config:
-    db-config:
-      table-prefix: tb_ # 表前缀
-#      id-type: auto  # 主键生成策略
-      logic-delete-value: 1 # 逻辑已删除值(默认为 1)
-      logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl # 打印 sql
+spring:
+  profiles:
+    include: dao

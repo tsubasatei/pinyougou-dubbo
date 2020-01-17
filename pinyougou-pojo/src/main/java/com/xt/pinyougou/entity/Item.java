@@ -1,17 +1,21 @@
 package com.xt.pinyougou.entity;
 
-import java.math.BigDecimal;
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableField;
-import java.io.Serializable;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.apache.solr.client.solrj.beans.Field;
+import org.springframework.data.solr.core.mapping.Dynamic;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.Map;
 
 /**
  * <p>
@@ -30,18 +34,21 @@ public class Item implements Serializable {
 
     private static final long serialVersionUID=1L;
 
+    @Field
     @ApiModelProperty(value = "商品id，同时也是商品编号")
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
+    @Field("item_title")
     @ApiModelProperty(value = "商品标题")
     private String title;
 
     @ApiModelProperty(value = "商品卖点")
     private String sellPoint;
 
+    @Field("item_price")
     @ApiModelProperty(value = "商品价格，单位为：元")
-    private BigDecimal price;
+    private Double price;
 
     private Integer stockCount;
 
@@ -75,19 +82,27 @@ public class Item implements Serializable {
 
     private String isDefault;
 
+    @Field("item_goodsid")
     private Long goodsId;
 
     private String sellerId;
 
     private String cartThumbnail;
 
+    @Field("item_category")
     private String category;
 
+    @Field("item_brand")
     private String brand;
 
     private String spec;
 
+    @Field("item_seller")
     private String seller;
 
+    @Dynamic
+    @Field("item_spec_*")
+    @TableField(exist = false)
+    private Map<String, String> specMap;
 
 }

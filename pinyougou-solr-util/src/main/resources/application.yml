@@ -1,0 +1,8 @@
+spring:
+  data:
+    solr:
+      host: http://192.168.239.11:8983/solr
+  profiles:
+    include: dao
+server:
+  port: 9200

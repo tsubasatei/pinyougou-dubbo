@@ -1,17 +1,16 @@
 package com.xt.pinyougou.entity;
 
-import java.math.BigDecimal;
-
-import com.baomidou.mybatisplus.annotation.TableLogic;
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.io.Serializable;
+import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
 
 /**
  * <p>
@@ -68,7 +67,7 @@ public class Goods implements Serializable {
     private String smallPic;
 
     @ApiModelProperty(value = "商城价")
-    private BigDecimal price;
+    private Double price;
 
     @ApiModelProperty(value = "分类模板ID")
     private Long typeTemplateId;
