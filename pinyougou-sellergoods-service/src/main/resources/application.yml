@@ -12,4 +12,6 @@ dubbo:
 
 spring:
   profiles:
-    include: dao
+    include:
+      - dao
+      - common

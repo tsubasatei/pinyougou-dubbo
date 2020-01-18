@@ -23,6 +23,11 @@
             <artifactId>pinyougou-sellergoods-interface</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.xt.pinyougou</groupId>
+            <artifactId>pinyougou-common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>com.alibaba.boot</groupId>
