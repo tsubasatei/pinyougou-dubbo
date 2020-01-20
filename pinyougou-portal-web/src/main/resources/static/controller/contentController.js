@@ -13,5 +13,8 @@ app.controller('contentController', function ($scope, contentService) {
         )
     };
 
-
+    // 搜索跳转
+    $scope.search = function () {
+        location.href = "http://localhost:9004/#?keywords=" + $scope.keywords;
+    }
 });

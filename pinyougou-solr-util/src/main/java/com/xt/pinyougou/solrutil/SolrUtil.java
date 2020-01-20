@@ -6,6 +6,8 @@ import com.xt.pinyougou.entity.Item;
 import com.xt.pinyougou.mapper.ItemMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.solr.core.SolrTemplate;
+import org.springframework.data.solr.core.query.Query;
+import org.springframework.data.solr.core.query.SimpleQuery;
 import org.springframework.stereotype.Component;
 
 import java.io.UnsupportedEncodingException;
@@ -51,5 +53,11 @@ public class SolrUtil {
         solrTemplate.saveBeans("pyg_db", items);
         solrTemplate.commit("pyg_db");
         System.out.println("======结束======");
+    }
+
+    public void deleteAll() {
+        Query query = new SimpleQuery("*:*");
+        solrTemplate.delete("pyg_db", query);
+        solrTemplate.commit("pyg_db");
     }
 }

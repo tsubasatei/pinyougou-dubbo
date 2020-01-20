@@ -21,7 +21,7 @@ import java.util.List;
  * @author xt
  * @since 2020-01-07
  */
-@Service
+@Service(timeout = 5000)
 public class ItemCatServiceImpl extends ServiceImpl<ItemCatMapper, ItemCat> implements ItemCatService {
 
     @Autowired

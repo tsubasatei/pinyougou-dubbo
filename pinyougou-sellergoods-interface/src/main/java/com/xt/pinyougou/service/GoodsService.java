@@ -3,6 +3,7 @@ package com.xt.pinyougou.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.xt.pinyougou.entity.Goods;
+import com.xt.pinyougou.entity.Item;
 import com.xt.pinyougou.pojo.GoodsGroup;
 
 import java.util.List;
@@ -27,4 +28,7 @@ public interface GoodsService extends IService<Goods> {
     boolean updateStatus(List<Long> ids, String status);
 
     boolean updateMarketable(Long id, String marketable);
+
+    // 根据商品ID和状态查询Item表信息
+    List<Item> findItemListByGoodsIdAndStatus(List<Long> goodsIds, String status);
 }

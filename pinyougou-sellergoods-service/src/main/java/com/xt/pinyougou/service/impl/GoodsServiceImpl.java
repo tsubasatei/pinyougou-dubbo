@@ -207,4 +207,19 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
         return true;
     }
 
+    /**
+     * 根据商品ID和状态查询Item表信息
+     * @param goodsIds
+     * @param status
+     * @return
+     */
+    @Transactional(readOnly = true)
+    @Override
+    public List<Item> findItemListByGoodsIdAndStatus(List<Long> goodsIds, String status) {
+        QueryWrapper<Item> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda().in(Item::getGoodsId, goodsIds).eq(Item::getStatus, status);
+        List<Item> items = itemMapper.selectList(queryWrapper);
+        return items;
+    }
+
 }

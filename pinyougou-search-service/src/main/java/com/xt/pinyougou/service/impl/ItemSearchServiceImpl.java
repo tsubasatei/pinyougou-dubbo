@@ -1,10 +1,12 @@
 package com.xt.pinyougou.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.alibaba.fastjson.JSON;
 import com.xt.pinyougou.entity.Item;
 import com.xt.pinyougou.service.ItemSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.solr.core.SolrTemplate;
 import org.springframework.data.solr.core.query.*;
@@ -13,10 +15,7 @@ import org.springframework.util.StringUtils;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 搜索服务实现类
@@ -30,7 +29,12 @@ public class ItemSearchServiceImpl implements ItemSearchService {
 
     @Override
     public Map<String, Object> search(Map searchMap) {
+
         Map<String, Object> map = new HashMap<>();
+        // 关键字空格处理
+        String keywords = (String) searchMap.get("keywords");
+        searchMap.put("keywords", keywords.replace(" ", ""));
+
         // 1. 查询列表
         try {
             map.putAll(searchList(searchMap));
@@ -95,6 +99,53 @@ public class ItemSearchServiceImpl implements ItemSearchService {
             }
         }
 
+        // 1.5 按价格筛选
+        if (!StringUtils.isEmpty(searchMap.get("price"))) {
+            String price = (String) searchMap.get("price");
+            String[] split = price.split("-");
+            // 如果最低价格不等于0
+            if (!split[0].equals("0")) {
+                Criteria filterCriteria = new Criteria("item_price").greaterThanEqual(split[0]);
+                FilterQuery filterQuery = new SimpleFilterQuery(filterCriteria);
+                query.addFilterQuery(filterQuery);
+            }
+            // 如果最高价格不等于*
+            if (!split[1].equals("0")) {
+                Criteria filterCriteria = new Criteria("item_price").lessThanEqual(split[1]);
+                FilterQuery filterQuery = new SimpleFilterQuery(filterCriteria);
+                query.addFilterQuery(filterQuery);
+            }
+        }
+
+        // 1.6 分页查询
+        Integer pageNo = (Integer)searchMap.get("pageNo");
+        if (pageNo == null) {
+            pageNo = 1; // 默认查找第1页
+        }
+        Integer pageSize = (Integer)searchMap.get("pageSize");
+        if (pageSize == null) {
+            pageSize = 20; // 默认每页记录数20
+        }
+        query.setOffset((pageNo - 1L)*pageSize); //从第几条记录查询
+        query.setRows(pageSize);
+
+        // 1.7 排序
+        String sortValue = (String) searchMap.get("sort"); // 排序规则 ASC  DESC
+        String sortField = (String) searchMap.get("sortField"); // 排序字段
+        if (!StringUtils.isEmpty(sortValue) && !StringUtils.isEmpty(sortField)) {
+            if (sortValue.equals("ASC")) {
+//                Sort sort = new Sort(Sort.Direction.ASC, "item_" + sortField);
+                Sort sort = Sort.by(Sort.Direction.ASC, "item_" + sortField);
+                query.addSort(sort);
+            }
+            if (sortValue.equals("DESC")) {
+                Sort sort = Sort.by(Sort.Direction.DESC, "item_" + sortField);
+                query.addSort(sort);
+            }
+
+        }
+
+        // 高亮显示处理
         HighlightPage<Item> page = solrTemplate.queryForHighlightPage("pyg_db", query, Item.class);
         for (HighlightEntry<Item> entry : page.getHighlighted()) { //循环高亮入口集合
             Item item = entry.getEntity(); // 获取原实体
@@ -104,6 +155,8 @@ public class ItemSearchServiceImpl implements ItemSearchService {
 
         }
         map.put("rows", page.getContent());
+        map.put("totalPages", page.getTotalPages()); // 返回总页数
+        map.put("total", page.getTotalElements()); //返回总记录数
         return map;
     }
 
@@ -163,5 +216,37 @@ public class ItemSearchServiceImpl implements ItemSearchService {
         }
 
         return map;
+    }
+
+    @Override
+    public void importList(List<Item> items) {
+        System.out.println("====商品列表====");
+        items.forEach(item -> {
+            Map<String, String> map = JSON.parseObject(item.getSpec(), Map.class);
+            Map<String, String> specMap = new HashMap<>();
+            map.entrySet().stream().forEach(x -> {
+                try {
+                    specMap.put(URLEncoder.encode(x.getKey(), "UTF-8"), x.getValue());
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+            });
+            item.setSpecMap(specMap); // 给带注解的字段赋值
+            System.out.println(item.getTitle() + " --> " + item.getSpecMap());
+        });
+        System.out.println("总条数：" + items.size());
+        solrTemplate.saveBeans("pyg_db", items);
+        solrTemplate.commit("pyg_db");
+        System.out.println("======结束======");
+    }
+
+    @Override
+    public void deleteByGoodsIds(List<Long> goodsIds) {
+        System.out.println("删除商品ID：" + goodsIds);
+        Query query = new SimpleQuery();
+        Criteria criteria = new Criteria("item_goodsid").in(goodsIds);
+        query.addCriteria(criteria);
+        solrTemplate.delete("pyg_db", query);
+        solrTemplate.commit("pyg_db");
     }
 }
