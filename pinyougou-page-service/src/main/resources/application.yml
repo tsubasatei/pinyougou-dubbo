@@ -1,0 +1,21 @@
+server:
+  port: 8004
+spring:
+  freemarker:
+    suffix: .ftl
+    settings:
+      classic_compatible: true  # springboot整合freemarke FTL stack trace ("~" means nesting-related): - Failed at: #
+  profiles:
+    include: dao
+
+# 配置网页生成目录
+pagedir: d:\\item\\
+
+dubbo:
+  application:
+    name: pinyougou-page-service
+  registry:
+    address: zookeeper://192.168.239.11:2181
+  protocol:
+    name: dubbo
+    port: 20883

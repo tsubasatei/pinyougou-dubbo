@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.xt.bean.Result;
 import com.xt.pinyougou.entity.Goods;
 import com.xt.pinyougou.entity.Item;
+import com.xt.pinyougou.page.service.ItemPageService;
 import com.xt.pinyougou.pojo.GoodsGroup;
 import com.xt.pinyougou.service.GoodsService;
 import com.xt.pinyougou.service.ItemSearchService;
@@ -34,6 +35,8 @@ public class GoodsController {
     private GoodsService goodsService;
     @Reference
     private ItemSearchService itemSearchService;
+    @Reference
+    private ItemPageService itemPageService;
 
     @ApiOperation(value = "查询商品详细信息", notes = "商品详情")
     @GetMapping("/{id}")
@@ -58,12 +61,17 @@ public class GoodsController {
             boolean flag = goodsService.updateStatus(Arrays.asList(ids), status);
             if (flag) {
                 if ("1".equals(status)) { //审核通过
+                    // 1. 导入索引数据库
                     List<Item> itemList = goodsService.findItemListByGoodsIdAndStatus(Arrays.asList(ids), status);
-                    //调用搜索接口实现数据批量导入
+                    // 调用搜索接口实现数据批量导入
                     if (itemList != null && itemList.size() > 0) {
                         itemSearchService.importList(itemList);
                     } else {
                         System.out.println("没有明商品细数据");
+                    }
+                    // 2. 生成静态网页
+                    for (Long goodsId : ids) {
+                        itemPageService.genItemHtml(goodsId);
                     }
                 }
                 return new Result(true, "审批成功");
@@ -93,6 +101,13 @@ public class GoodsController {
             result = new Result(false, e.getMessage());
         }
         return result;
+    }
+
+    @ApiOperation(value = "生成商品详情页", notes = "生成静态页（测试）")
+    @GetMapping("/genItemHtml/{id}")
+    public Boolean genItemHtml(@ApiParam(value = "商品ID", required = true) @PathVariable("id") Long id) {
+        boolean flag = itemPageService.genItemHtml(id);
+        return flag;
     }
 }
 
