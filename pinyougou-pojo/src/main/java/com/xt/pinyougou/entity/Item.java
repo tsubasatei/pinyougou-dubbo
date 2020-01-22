@@ -58,6 +58,7 @@ public class Item implements Serializable {
     @ApiModelProperty(value = "商品条形码")
     private String barcode;
 
+    @Field("item_image")
     @ApiModelProperty(value = "商品图片")
     private String image;
 
