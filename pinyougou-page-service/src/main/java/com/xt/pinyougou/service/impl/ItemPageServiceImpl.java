@@ -1,7 +1,5 @@
 package com.xt.pinyougou.service.impl;
 
-import com.alibaba.dubbo.config.annotation.Service;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.xt.pinyougou.entity.Goods;
 import com.xt.pinyougou.entity.GoodsDesc;
@@ -15,9 +13,11 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfig;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.Writer;
 import java.util.HashMap;
@@ -27,7 +27,7 @@ import java.util.Map;
 /**
  * 商品详情页
  */
-@Service(timeout = 5000)
+@Service
 public class ItemPageServiceImpl implements ItemPageService {
 
     @Value("${pagedir}")
@@ -85,6 +85,19 @@ public class ItemPageServiceImpl implements ItemPageService {
             Writer writer = new FileWriter(pagedir + goodsId + ".html");
             template.process(dataModel, writer);
             writer.close();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean deleteItemHtml(Long[] goodsIds) {
+        try {
+            for (Long goodsId : goodsIds) {
+                new File(pagedir + goodsId + ".html").delete();
+            }
             return true;
         } catch (Exception e) {
             e.printStackTrace();

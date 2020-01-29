@@ -15,3 +15,13 @@ spring:
       host: http://192.168.239.11:8983/solr
   profiles:
     include: common
+  activemq:
+    broker-url: tcp://192.168.239.11:61616
+    user: admin
+    password: admin
+  jms:
+    pub-sub-domain: false
+
+# 定义队列的名称
+solrQueue: pinyougou_queue_solr
+solrQueueDelete: pinyougou_queue_solr_delete

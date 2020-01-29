@@ -1,20 +1,22 @@
 package com.xt.pinyougou.controller;
 
-
+import com.alibaba.fastjson.JSON;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.xt.bean.Result;
 import com.xt.pinyougou.entity.Goods;
 import com.xt.pinyougou.entity.Item;
-import com.xt.pinyougou.page.service.ItemPageService;
 import com.xt.pinyougou.pojo.GoodsGroup;
 import com.xt.pinyougou.service.GoodsService;
-import com.xt.pinyougou.service.ItemSearchService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jms.core.JmsMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
+import javax.jms.Queue;
+import javax.jms.Topic;
 import java.util.Arrays;
 import java.util.List;
 
@@ -33,10 +35,24 @@ public class GoodsController {
 
     @Reference
     private GoodsService goodsService;
-    @Reference
-    private ItemSearchService itemSearchService;
-    @Reference
-    private ItemPageService itemPageService;
+
+    @Autowired
+    private JmsMessagingTemplate jmsMessagingTemplate;
+
+    @Autowired
+    private Queue queueSolr; //用户在索引库中导入记录
+
+    @Autowired
+    private Queue queueSolrDelete; //用户在索引库中删除记录
+
+    @Autowired
+    private Topic topicPage; // 用于生成静态页
+
+    @Autowired
+    private Topic topicPageDelete; // 用于删除静态页
+
+//    @Reference
+//    private ItemPageService itemPageService;
 
     @ApiOperation(value = "查询商品详细信息", notes = "商品详情")
     @GetMapping("/{id}")
@@ -65,13 +81,21 @@ public class GoodsController {
                     List<Item> itemList = goodsService.findItemListByGoodsIdAndStatus(Arrays.asList(ids), status);
                     // 调用搜索接口实现数据批量导入
                     if (itemList != null && itemList.size() > 0) {
-                        itemSearchService.importList(itemList);
+//                        itemSearchService.importList(itemList);
+
+                        /**
+                         * List 和 Map 都不能序列化传输，把商品列表转为 json 字符串传输
+                         */
+                        String jsonString = JSON.toJSONString(itemList);
+                        jmsMessagingTemplate.convertAndSend(queueSolr, jsonString);
+
                     } else {
                         System.out.println("没有明商品细数据");
                     }
                     // 2. 生成静态网页
                     for (Long goodsId : ids) {
-                        itemPageService.genItemHtml(goodsId);
+//                        itemPageService.genItemHtml(goodsId);
+                        jmsMessagingTemplate.convertAndSend(topicPage, goodsId);
                     }
                 }
                 return new Result(true, "审批成功");
@@ -92,7 +116,13 @@ public class GoodsController {
             boolean flag = goodsService.removeByIds(Arrays.asList(ids));
             result.setSuccess(flag);
             if (flag) {
-                itemSearchService.deleteByGoodsIds(Arrays.asList(ids));
+//                itemSearchService.deleteByGoodsIds(Arrays.asList(ids));
+
+                // 删除索引库
+                jmsMessagingTemplate.convertAndSend(queueSolrDelete, ids);
+
+                // 删除页面
+                jmsMessagingTemplate.convertAndSend(topicPageDelete, ids);
                 result.setMessage("批量删除成功");
             } else {
                 result.setMessage("批量删除失败");
@@ -103,11 +133,11 @@ public class GoodsController {
         return result;
     }
 
-    @ApiOperation(value = "生成商品详情页", notes = "生成静态页（测试）")
-    @GetMapping("/genItemHtml/{id}")
-    public Boolean genItemHtml(@ApiParam(value = "商品ID", required = true) @PathVariable("id") Long id) {
-        boolean flag = itemPageService.genItemHtml(id);
-        return flag;
-    }
+//    @ApiOperation(value = "生成商品详情页", notes = "生成静态页（测试）")
+//    @GetMapping("/genItemHtml/{id}")
+//    public Boolean genItemHtml(@ApiParam(value = "商品ID", required = true) @PathVariable("id") Long id) {
+//        boolean flag = itemPageService.genItemHtml(id);
+//        return flag;
+//    }
 }
 

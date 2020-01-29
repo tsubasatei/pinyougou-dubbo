@@ -7,15 +7,25 @@ spring:
       classic_compatible: true  # springboot整合freemarke FTL stack trace ("~" means nesting-related): - Failed at: #
   profiles:
     include: dao
+  activemq:
+    broker-url: tcp://192.168.239.11:61616
+    user: admin
+    password: admin
+#  jms:
+#    pub-sub-domain: true
+
+# 定义队列的名称
+pageTopic: pinyougou_topic_page
+pageTopicDelete: pinyougou_topic_page_delete
 
 # 配置网页生成目录
 pagedir: d:\\item\\
 
-dubbo:
-  application:
-    name: pinyougou-page-service
-  registry:
-    address: zookeeper://192.168.239.11:2181
-  protocol:
-    name: dubbo
-    port: 20883
+#dubbo:
+#  application:
+#    name: pinyougou-page-service
+#  registry:
+#    address: zookeeper://192.168.239.11:2181
+#  protocol:
+#    name: dubbo
+#    port: 20883

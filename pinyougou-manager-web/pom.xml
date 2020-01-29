@@ -23,16 +23,22 @@
             <artifactId>pinyougou-content-interface</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <!-- 用 MQ 替代 发送队列消息 -->
+        <!--
         <dependency>
             <groupId>com.xt.pinyougou</groupId>
             <artifactId>pinyougou-search-interface</artifactId>
             <version>${project.version}</version>
         </dependency>
+        -->
+        <!-- 用 MQ 替代 发送主题消息 -->
+        <!--
         <dependency>
             <groupId>com.xt.pinyougou</groupId>
             <artifactId>pinyougou-page-interface</artifactId>
             <version>${project.version}</version>
         </dependency>
+        -->
         <dependency>
             <groupId>com.xt.pinyougou</groupId>
             <artifactId>pinyougou-common</artifactId>
@@ -55,6 +61,17 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <!-- springboot 整合 activemq-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-activemq</artifactId>
+        </dependency>
+        <!-- fastjson -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
         </dependency>
     </dependencies>
 

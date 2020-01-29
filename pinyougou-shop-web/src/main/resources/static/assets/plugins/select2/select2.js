@@ -1320,7 +1320,7 @@ the specific language governing permissions and limitations under the Apache Lic
          * Opens the dropdown
          *
          * @return {Boolean} whether or not dropdown was opened. This method will return false if, for example,
-         * the dropdown is already open, or if the 'open' event listener on the element called preventDefault().
+         * the dropdown is already open, or if the 'open' event consumer on the element called preventDefault().
          */
         // abstract
         open: function () {

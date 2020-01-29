@@ -286,7 +286,7 @@
     if (tmp && $.inArray(tmp, my_skins))
       change_skin(tmp);
 
-    //Add the change skin listener
+    //Add the change skin consumer
     $("[data-skin]").on('click', function (e) {
       if($(this).hasClass('knob'))
         return;
