@@ -1,7 +1,7 @@
 package com.xt.pinyougou.config;
 
 import org.apache.activemq.command.ActiveMQQueue;
-import org.apache.activemq.command.ActiveMQTempTopic;
+import org.apache.activemq.command.ActiveMQTopic;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -50,7 +50,7 @@ public class MyMQConfig {
      */
     @Bean
     public Topic topicPage() {
-        return new ActiveMQTempTopic(pageTopic);
+        return new ActiveMQTopic(pageTopic);
     }
 
     /**
@@ -58,7 +58,7 @@ public class MyMQConfig {
      */
     @Bean
     public Topic topicPageDelete() {
-        return new ActiveMQTempTopic(pageTopicDelete);
+        return new ActiveMQTopic(pageTopicDelete);
     }
 
 }
