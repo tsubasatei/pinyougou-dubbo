@@ -1,0 +1,27 @@
+server:
+  port: 9005
+
+dubbo:
+  application:
+    name: pinyougou-user-web
+  registry:
+    address: zookeeper://192.168.239.11:2181
+
+spring:
+  thymeleaf:
+    cache: false
+  profiles:
+    include: common
+
+  activemq:
+    broker-url: tcp://192.168.239.11:61616
+    user: admin
+    password: admin
+  jms:
+    pub-sub-domain: false
+
+# 定义队列的名称
+sms: pinyougou_queue_sms
+
+
+

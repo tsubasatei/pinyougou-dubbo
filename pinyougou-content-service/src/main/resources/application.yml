@@ -8,7 +8,7 @@ spring:
       - dao
 dubbo:
   application:
-    name: pinyougou-content-service
+    name: pinyougou-content-util
   registry:
     address: zookeeper://192.168.239.11:2181
   protocol:

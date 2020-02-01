@@ -23,7 +23,7 @@ pagedir: d:\\item\\
 
 #dubbo:
 #  application:
-#    name: pinyougou-page-service
+#    name: pinyougou-page-util
 #  registry:
 #    address: zookeeper://192.168.239.11:2181
 #  protocol:

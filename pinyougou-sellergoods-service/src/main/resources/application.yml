@@ -3,7 +3,7 @@ server:
 
 dubbo:
   application:
-    name: pinyougou-sellergoods-service
+    name: pinyougou-sellergoods-util
   registry:
     address: zookeeper://192.168.239.11:2181
   protocol:

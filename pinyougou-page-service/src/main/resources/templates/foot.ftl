@@ -270,10 +270,10 @@
 <script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
 <script type="text/javascript">
     $(function(){
-        $("#service").hover(function(){
-            $(".service").show();
+        $("#util").hover(function(){
+            $(".util").show();
         },function(){
-            $(".service").hide();
+            $(".util").hide();
         });
         $("#shopcar").hover(function(){
             $("#shopcarlist").show();
