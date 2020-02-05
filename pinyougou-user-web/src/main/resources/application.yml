@@ -23,5 +23,25 @@ spring:
 # 定义队列的名称
 sms: pinyougou_queue_sms
 
+# ===================================================================
+# cas 基础配置
+#  包含配置文件以及对应的 VO 类
+# ===================================================================
+security:
+  cas:
+    server:
+      host:
+        url: http://192.168.239.11:9100/cas # CAS 服务地址
+        login_url: ${security.cas.server.host.url}/login # CAS 服务登录地址
+        logout_url: ${security.cas.server.host.url}/logout?service=http://www.baidu.com # CAS 服务注销地址
+  app:
+    server:
+      host:
+        url: http://localhost:${server.port} #本应用访问地址
+    login:
+      url: /login/cas #本应用登录地址
+    logout:
+      url: /logout/cas #本应用退出地址
+
 
 

@@ -1,0 +1,18 @@
+server:
+  port: 9006
+
+dubbo:
+  application:
+    name: pinyougou-cart-web
+  registry:
+    address: zookeeper://192.168.239.11:2181
+
+spring:
+  thymeleaf:
+    cache: false
+  profiles:
+    include: common
+
+
+
+

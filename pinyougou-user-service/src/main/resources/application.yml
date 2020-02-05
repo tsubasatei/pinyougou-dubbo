@@ -12,6 +12,9 @@ spring:
     password: admin
   jms:
     pub-sub-domain: false
+# 定义队列的名称
+sms: pinyougou_queue_sms
+
 dubbo:
   application:
     name: pinyougou-user-util

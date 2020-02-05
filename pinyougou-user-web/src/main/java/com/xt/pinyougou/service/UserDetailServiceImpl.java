@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.List;
  * 认证类，用于获取用户权限列表
  * 在登录后得到用户名，可以根据用户名查询角色或执行一些逻辑。
  */
+@Component
 public class UserDetailServiceImpl implements UserDetailsService {
 
     @Override
