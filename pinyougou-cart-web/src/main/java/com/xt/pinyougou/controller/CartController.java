@@ -10,7 +10,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -44,7 +47,6 @@ public class CartController {
     }
 
     @ApiOperation(value = "添加商品到购物车", notes = "添加商品到购物车")
-//    @PostMapping("/{itemId}/{num}")
     @GetMapping("/{itemId}/{num}")
     public Result addGoodsToCartList(@ApiParam(value = "商品SKU的ID", required = true) @PathVariable("itemId") Long itemId,
                                      @ApiParam(value = "数量", required = true) @PathVariable("num") Integer num) {
